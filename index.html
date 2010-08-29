@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Zadłużenie państwa Polskiego</title>
+	<script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<style type="text/css" media="screen">
+		.money {
+			margin: 100px auto;
+			width: 420px;
+			text-align: center;
+			font: 26px "Arial";
+			font-weight: normal;
+			color: red;
+		}
+		
+		.money span {
+			font-size: 40px;
+			display: block;
+			font-weight: bold;
+			padding: 5px 0;
+		}
+	</style>
+	
+	<script type="text/javascript" charset="utf-8">
+		Number.prototype.formatMoney = function(c, d, t){
+			var n = this, c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+			return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+		};
+	
+		var money = 688203000000.0;
+		var increseBy = 34.33 / 1000.0;
+		var ludnosc = 38167329;
+		$(document).ready(function () {
+			var start_date = new Date();
+			start_date.setFullYear(2010, 6,1); // Dane z początku czerwca
+			var today = new Date();
+			var time = today - start_date;
+			money += increseBy * time;
+			
+			setInterval(function () {
+				money += increseBy;
+				$('#money').text(money.formatMoney(2, ',', ' ') + " zł");
+				var per_person = money / ludnosc;
+				$('#money_per_person').text(per_person.formatMoney(2, ',', ' ') + " zł");
+			}, 1);
+		});
+	</script>
+</head>
+<body>
+	<div class="money">
+		<span id="money"></span>
+		czyli około
+		<span id="money_per_person"></span>
+		na osobę...
+	</div>
+</body>
+</html>
